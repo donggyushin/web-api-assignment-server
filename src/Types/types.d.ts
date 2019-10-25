@@ -1,5 +1,11 @@
 import mongoose from 'mongoose'
 
+export interface UserResponse {
+    ok: boolean,
+    error: string,
+    user: IUser
+}
+
 export interface LoginResponse {
     ok: boolean,
     error: string,

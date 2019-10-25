@@ -1,8 +1,19 @@
 import { Request, Response } from 'express'
-import { LoginResponse } from '../Types/types'
+import { LoginResponse, IUser, UserResponse } from '../Types/types'
 import UserModel from '../Models/user'
 import { generateToken } from '../utils/jsonwebtoken'
 import { encrypttext2 } from '../utils/sha512'
+
+export const userInfo = async (req: Request, res: Response) => {
+    // @ts-ignore
+    const user: IUser = req.user;
+    let result: UserResponse = {
+        ok: null,
+        error: null,
+        user
+    }
+    res.json(result);
+}
 
 export const login = async (req: Request, res: Response) => {
     const { username, password } = req.body;
