@@ -1,4 +1,4 @@
-import App from './app';
+import App from "./app"
 import dotenv from 'dotenv'
 import './Database/mongoose'
 dotenv.config()
