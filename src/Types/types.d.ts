@@ -10,3 +10,9 @@ export interface IUser extends mongoose.Document {
     username: string,
     password: string
 }
+
+export interface ITodo extends mongoose.Document {
+    text: string,
+    done: boolean,
+    userId: string
+}

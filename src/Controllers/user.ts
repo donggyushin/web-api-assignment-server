@@ -1,8 +1,49 @@
 import { Request, Response } from 'express'
 import { LoginResponse } from '../Types/types'
 import UserModel from '../Models/user'
-import { encrypttext } from '../utils/crypto'
 import { generateToken } from '../utils/jsonwebtoken'
+import { encrypttext2 } from '../utils/sha512'
+
+export const login = async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+    let result: LoginResponse = {
+        ok: null,
+        error: null,
+        jwt: null
+    }
+    const encryptedPassword = encrypttext2(password)
+    try {
+        const user = await UserModel.findOne({
+            username,
+            password: encryptedPassword
+        })
+
+        if (user) {
+            result = {
+                ok: true,
+                error: null,
+                jwt: generateToken(user.id)
+            }
+        } else {
+            result = {
+                ok: false,
+                error: '유저없음',
+                jwt: null
+            }
+        }
+
+    } catch (err) {
+        result = {
+            ok: false,
+            error: err.message,
+            jwt: null
+        }
+    }
+
+
+
+    res.json(result)
+}
 
 export const makeNewAccount = async (req: Request, res: Response) => {
     const { username, password } = req.body
@@ -26,7 +67,7 @@ export const makeNewAccount = async (req: Request, res: Response) => {
         try {
             const user = await new UserModel({
                 username,
-                password: encrypttext(password)
+                password: encrypttext2(password)
             }).save()
             result = {
                 ok: true,
