@@ -3,7 +3,10 @@ import { ITodo } from '../Types/types'
 
 const todoSchema: Schema = new mongoose.Schema({
     text: String,
-    done: Boolean,
+    done: {
+        type: Boolean,
+        default: false
+    },
     userId: String
 })
 

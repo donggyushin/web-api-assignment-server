@@ -7,7 +7,20 @@ export const generateToken = (id: string): string => {
 }
 
 export const decodeToken = (token: string): string => {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    console.log('I received token?', token);
+    let id = null
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+        // @ts-ignore
+        if (decoded.id) {
+            //@ts-ignore
+            id = decoded.id
+        }
+
+    } catch (err) {
+
+    }
+
     // @ts-ignore
-    return decoded.id
+    return id
 }
