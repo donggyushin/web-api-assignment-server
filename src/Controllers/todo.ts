@@ -46,9 +46,10 @@ export const toggleTodo = async (req: Request, res: Response) => {
 }
 
 export const deleteTodo = async (req: Request, res: Response) => {
-    const { todoId } = req.body;
+    const { todoId, jwt } = req.params;
+
     // @ts-ignore
-    const user: IUser = req.user;
+    const user: IUser = await UserModel.findById(decodeToken(jwt))
     let result: TodoResponse = {
         ok: null,
         error: null,

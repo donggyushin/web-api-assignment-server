@@ -92,23 +92,25 @@ exports.toggleTodo = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.deleteTodo = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var todoId, user, result, todo, err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, todoId, jwt, user, result, todo, err_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                todoId = req.body.todoId;
-                user = req.user;
+                _a = req.params, todoId = _a.todoId, jwt = _a.jwt;
+                return [4 /*yield*/, user_1.default.findById(jsonwebtoken_1.decodeToken(jwt))];
+            case 1:
+                user = _b.sent();
                 result = {
                     ok: null,
                     error: null,
                     todo: null
                 };
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, todo_1.default.findById(todoId)];
+                _b.label = 2;
             case 2:
-                todo = _a.sent();
+                _b.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, todo_1.default.findById(todoId)];
+            case 3:
+                todo = _b.sent();
                 if (user.id !== todo.userId) {
                     result = {
                         ok: false,
@@ -124,16 +126,16 @@ exports.deleteTodo = function (req, res) { return __awaiter(void 0, void 0, void
                         todo: todo
                     };
                 }
-                return [3 /*break*/, 4];
-            case 3:
-                err_2 = _a.sent();
+                return [3 /*break*/, 5];
+            case 4:
+                err_2 = _b.sent();
                 result = {
                     ok: false,
                     error: err_2.message,
                     todo: null
                 };
-                return [3 /*break*/, 4];
-            case 4:
+                return [3 /*break*/, 5];
+            case 5:
                 res.json(result);
                 return [2 /*return*/];
         }
