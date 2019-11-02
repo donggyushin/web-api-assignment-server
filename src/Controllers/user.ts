@@ -38,7 +38,7 @@ export const login = async (req: Request, res: Response) => {
         } else {
             result = {
                 ok: false,
-                error: '유저없음',
+                error: '유저없거나 비밀번호 다름',
                 jwt: null
             }
         }
